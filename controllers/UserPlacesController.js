@@ -1,27 +1,28 @@
 const async = require('async');
 const Sequelize = require('../db/db');
-const api = require('../utils/api');
-// const redis = require('redis');
-
-// const client = redis.createClient();
-
-// client.on('connect', () => {
-//   console.log('connected');
-// });
+const client = require('../db/redis');
+let query;
 
 module.exports = {
-  getUserPlaces: (callback) => {
-    Sequelize.query('SELECT * FROM users')
+  getUserPlaces: () => {
+    query = 'SELECT * FROM users'
+    Sequelize.query(query)
     .spread(users => {
-      users.forEach(user => {
+      async.eachSeries(users, (user, userCallback) => {
         const userId = user.id;
-        const query = `SELECT * FROM "userPlaces" WHERE "userId" = ${userId}`;
-        Sequelize.query(query, { raw: true })
+        console.log(userId);
+        query = `SELECT * FROM "userPlaces" WHERE "userId" = ${userId}`;
+        Sequelize.query(query)
         .then(data => {
           console.log(data);
         })
-        //callback(id);
-      });
+      }, err => {
+        if (err) {
+          console.log('Error: ', err)
+        } else {
+          console.log('Done inserting types and place types.');
+          placeCallback();
+        });
     })
     .catch(err => {
       console.log(err);

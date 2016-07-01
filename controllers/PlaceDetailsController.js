@@ -88,5 +88,6 @@ module.exports = {
     .catch(err => {
       console.log('Error querying places: ', err);
     });
+    // return place id to save to redis
   },
 };

@@ -1,3 +1,3 @@
 const PlaceDetails = require('../controllers/PlaceDetailsController');
 
-PlaceDetails.getPlaceDetails(2);
+const placeId = PlaceDetails.getPlaceDetails(2);
