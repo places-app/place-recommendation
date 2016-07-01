@@ -21,10 +21,11 @@ db.authenticate()
     console.log('Unable to connect to the database:', err);
   });
 
-const PlaceDetails = require('../controllers/PlaceDetailsController');
-PlaceDetails.getPlaceDetails(2);
-const UserPlaces = require('../controllers/UserPlacesController');
-UserPlaces.getUserPlaces();
+// const PlaceDetails = require('../controllers/PlaceDetailsController');
+// PlaceDetails.getPlaceDetails(2);
+// const UserPlaces = require('../controllers/UserPlacesController');
+// UserPlaces.getUserPlaces();
+// UserPlaces.getPlaces();
 
 app.listen(Number(process.env.PORT), process.env.HOST, () => {
   console.log(`listening *: ${process.env.PORT}`);

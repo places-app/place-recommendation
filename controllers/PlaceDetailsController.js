@@ -27,7 +27,6 @@ module.exports = {
             .spread(typeResults => {
               let typeId;
               if (typeResults.length === 0) {
-                // const query = `INSERT INTO types (name, "createdAt", "updatedAt") SELECT 'n', current_timestamp, current_timestamp WHERE NOT EXISTS (SELECT id FROM TYPES WHERE NAME ='n') RETURNING id`;
                 query = `INSERT INTO types (name, "createdAt", "updatedAt") VALUES ('${type}', current_timestamp, current_timestamp) RETURNING id`;
                 Sequelize.query(query)
                 .then(typeInserted => {
@@ -89,5 +88,23 @@ module.exports = {
       console.log('Error querying places: ', err);
     });
     // return place id to save to redis
+    // .then(places => {
+    //   const gPlaceIds = [];
+    //   places.forEach(place => {
+    //     const id = place['place.gPlaceId'];
+    //     if (id) {
+    //       api.getPlaceDetails(id)
+    //       .then(resp => {
+    //         console.log(resp.data.result.types);
+    //         client.rpush(place.id, resp.data.result.types, (err, reply) => {
+    //           console.log(reply);
+    //         });
+    //       });
+    //       gPlaceIds.push(id);
+    //     }
+    //   });
+
+    //   console.log(gPlaceIds);
+    // })
   },
 };
