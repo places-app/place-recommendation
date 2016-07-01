@@ -1,3 +1,3 @@
 const PlaceDetails = require('../controllers/PlaceDetailsController');
 
-PlaceDetails.getPlaceDetails();
+PlaceDetails.getPlaceDetails(2);

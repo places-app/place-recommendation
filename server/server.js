@@ -21,10 +21,8 @@ db.authenticate()
   });
 
 const PlaceDetails = require('../controllers/PlaceDetailsController');
-
-PlaceDetails.getPlaceDetails();
+PlaceDetails.getPlaceDetails(2);
 // const UserPlaces = require('../controllers/UserPlacesController');
-
 // UserPlaces.getUserPlaces();
 
 app.listen(Number(process.env.PORT), process.env.HOST, () => {

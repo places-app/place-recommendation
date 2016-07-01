@@ -1,3 +1,4 @@
+const async = require('async');
 const Sequelize = require('../db/db');
 const api = require('../utils/api');
 // const redis = require('redis');
@@ -11,9 +12,9 @@ const api = require('../utils/api');
 module.exports = {
   getUserPlaces: (callback) => {
     Sequelize.query('SELECT * FROM users')
-    .spread(results => {
-      results.forEach(result => {
-        const userId = result.id;
+    .spread(users => {
+      users.forEach(user => {
+        const userId = user.id;
         const query = `SELECT * FROM "userPlaces" WHERE "userId" = ${userId}`;
         Sequelize.query(query, { raw: true })
         .then(data => {
