@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
 const express = require('express');
 const app = express();
 const db = require('../db/db');
-const redis = require('../db/redis');
+const client = require('../db/redis');
 
 // API routes
 require('../routes/api-routes')(app);
@@ -22,7 +22,7 @@ db.authenticate()
   });
 
 // const PlaceDetails = require('../controllers/PlaceDetailsController');
-// PlaceDetails.getPlaceDetails(2);
+const getUserPlaces = require('../workers/getUserPlaces');
 // const UserPlaces = require('../controllers/UserPlacesController');
 // UserPlaces.getUserPlaces();
 // UserPlaces.getPlaces();
