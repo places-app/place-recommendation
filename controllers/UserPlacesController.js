@@ -38,7 +38,7 @@ module.exports = {
   },
   getPlaces: () => {
     return new Promise((resolve, reject) => {
-      query = `SELECT pt."placeId", pt."typeId", "name" FROM "placeTypes" AS pt INNER JOIN types ON pt."typeId" = types.id`;
+      query = `SELECT pt."placeId", pt."typeId", places."name" FROM "placeTypes" AS pt INNER JOIN types ON pt."typeId" = types.id INNER JOIN places ON pt."placeId" = places.id`;
       Sequelize.query(query, { raw: true })
       .then(placesTypes => {
         resolve(placesTypes[0]);

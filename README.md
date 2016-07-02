@@ -1,1 +1,1 @@
-# place-recommendation
+# places-recommendation
