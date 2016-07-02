@@ -52,9 +52,7 @@ module.exports = {
     const placeRankings = {};
     _.each(places, (types, placeId) => {    
       types.forEach(type => {
-        console.log('type', type);
         _.each(userTypes, (count, typeId) => {
-          console.log('userType', typeId);
           if (type === Number(typeId)) {
             if (placeId in placeRankings) {
               placeRankings[placeId] += count;

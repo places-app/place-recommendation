@@ -7,6 +7,7 @@ let query;
 module.exports = {
   getPlaceDetails: (placeId) => {
     query = `SELECT * FROM places WHERE id >= ${placeId}`;
+    // query for all places where place id is greater than last queried place id
     Sequelize.query(query)
     .spread(places => {
       let rPlaceId;
@@ -22,7 +23,8 @@ module.exports = {
           // iterate through each type
           async.eachSeries(types, (type, typeCallback) => {
             // check if type exists
-            query = `SELECT id FROM types WHERE name = '${type}'`
+            query = `SELECT id FROM types WHERE name = '${type}'`;
+            // query for all types where type matches
             Sequelize.query(query)
             .spread(typeResults => {
               let typeId;
@@ -52,10 +54,12 @@ module.exports = {
                 query = `INSERT INTO "placeTypes" ("placeId", "typeId", "createdAt", "updatedAt") VALUES (${placeId}, ${typeId}, current_timestamp, current_timestamp)`;
                 Sequelize.query(query)
                 .then(placeType => {
+                  // end of one inner async iteration
                   typeCallback();
                 })
                 .catch(err => {
                   console.log('Error inserting place type: ', err);
+                  // end of one inner async iteration
                   typeCallback();
                 });
               }
@@ -65,9 +69,10 @@ module.exports = {
             });
           }, err => {
             if (err) {
-              console.log('Error: ', err)
+              console.log('Error: ', err);
             } else {
               console.log('Done inserting types and place types.');
+              // end of one outer async iteration
               placeCallback();
             }
           });
@@ -77,8 +82,9 @@ module.exports = {
         });
       }, err => {
         if (err) {
-          console.log('Error: ', err)
+          console.log('Error: ', err);
         } else {
+          // end of all outer async iterations
           console.log('Done inserting all place types.');
           // save place id to redis
           client.set("Place_ID", ++rPlaceId, (err, reply) => {

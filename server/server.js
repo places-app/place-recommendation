@@ -22,10 +22,12 @@ db.authenticate()
   });
 
 // const PlaceDetails = require('../controllers/PlaceDetailsController');
-const getUserPlaces = require('../workers/getUserPlaces');
+// const getUserPlaces = require('../workers/getUserPlaces');
 // const UserPlaces = require('../controllers/UserPlacesController');
 // UserPlaces.getUserPlaces();
 // UserPlaces.getPlaces();
+// const RecommendationsController = require('../controllers/RecommendationsController');
+// RecommendationsController.getRecommendations();
 
 app.listen(Number(process.env.PORT), process.env.HOST, () => {
   console.log(`listening *: ${process.env.PORT}`);
