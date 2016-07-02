@@ -10,6 +10,9 @@ const app = express();
 const db = require('../db/db');
 const client = require('../db/redis');
 
+// apply app to use middleware
+require('../config/middleware')(app);
+
 // API routes
 require('../routes/api-routes')(app);
 
