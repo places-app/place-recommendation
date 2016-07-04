@@ -5,8 +5,8 @@ const client = require('../db/redis');
 let query;
 
 module.exports = {
-  getPlaceDetails: (placeId) => {
-    query = `SELECT * FROM places WHERE id >= ${placeId}`;
+  getPlaceDetails: (prevPlaceId) => {
+    query = `SELECT * FROM places WHERE id >= ${prevPlaceId}`;
     // query for all places where place id is greater than last queried place id
     Sequelize.query(query)
     .spread(places => {
@@ -37,7 +37,7 @@ module.exports = {
                   // insert type into placeTypes table
                   query = `INSERT INTO "placeTypes" ("placeId", "typeId", "createdAt", "updatedAt") VALUES (${placeId}, ${typeId}, current_timestamp, current_timestamp)`;
                   Sequelize.query(query)
-                  .then(placeType => {
+                  .then(() => {
                     typeCallback();
                   })
                   .catch(err => {
@@ -53,7 +53,7 @@ module.exports = {
                 typeId = typeResults[0].id;
                 query = `INSERT INTO "placeTypes" ("placeId", "typeId", "createdAt", "updatedAt") VALUES (${placeId}, ${typeId}, current_timestamp, current_timestamp)`;
                 Sequelize.query(query)
-                .then(placeType => {
+                .then(() => {
                   // end of one inner async iteration
                   typeCallback();
                 })
@@ -88,11 +88,11 @@ module.exports = {
           console.log('Done inserting all place types.');
           // save place id to redis
           if (rPlaceId) {
-            client.set("Place_ID", ++rPlaceId, (err, reply) => {
-              if (err) {
-                console.log("Error saving to redis: ", err);
+            client.set('Place_ID', ++rPlaceId, (error, reply) => {
+              if (error) {
+                console.log('Error saving to redis: ', error);
               } else {
-                console.log("Successfully saved to redis, STATUS:", reply);
+                console.log('Successfully saved to redis, STATUS:', reply);
               }
             });
           }

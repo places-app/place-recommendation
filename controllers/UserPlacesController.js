@@ -3,9 +3,9 @@ const Sequelize = require('../db/db');
 let query;
 
 module.exports = {
-  getUserPlaces: () => {
-    return new Promise((resolve, reject) => {
-      let userPlaceTypes = [];
+  getUserPlaces: () => (
+    new Promise((resolve, reject) => {
+      const userPlaceTypes = [];
       query = 'SELECT * FROM users';
       // query for all users;
       Sequelize.query(query)
@@ -39,10 +39,10 @@ module.exports = {
       .catch(err => {
         console.log('Error querying users: ', err);
       });
-    });
-  },
-  getPlaces: () => {
-    return new Promise((resolve, reject) => {
+    })
+  ),
+  getPlaces: () => (
+    new Promise((resolve, reject) => {
       query = `SELECT pt."placeId", pt."typeId", places."name" FROM "placeTypes" AS pt INNER JOIN types ON pt."typeId" = types.id INNER JOIN places ON pt."placeId" = places.id`;
       // query for all place types
       Sequelize.query(query, { raw: true })
@@ -53,6 +53,6 @@ module.exports = {
         console.log('Error querying place types: ', err);
         reject(err);
       });
-    });
-  },
+    })
+  ),
 };

@@ -21,19 +21,19 @@ module.exports = {
   },
   // map user place types to user places
   mapUserPlaces: (userPlaceType) => {
-    const groups = _.groupBy(userPlaceType, value => {
-      return value.userId + '#' + value.placeId;
-    });
-    const userPlaces = _.map(groups, group => {
-      return {
+    const groups = _.groupBy(userPlaceType, value => (
+      `${value.userId}'#'${value.placeId}`
+    ));
+    const userPlaces = _.map(groups, group => (
+      {
         userId: group[0].userId,
         places: group[0].placeId,
         types: _.pluck(group, 'typeId'),
-      };
-    });
+      }
+    ));
     return userPlaces;
   },
-  // map user places to user types 
+  // map user places to user types
   mapUserTypes: (userPlaces) => {
     const userTypes = {};
     userPlaces.forEach(userPlace => {
@@ -50,7 +50,7 @@ module.exports = {
   // compare user place types with all place types
   comparePlaceTypes: (userTypes, places) => {
     const placeRankings = {};
-    _.each(places, (types, placeId) => {    
+    _.each(places, (types, placeId) => {
       types.forEach(type => {
         _.each(userTypes, (count, typeId) => {
           if (type === Number(typeId)) {
@@ -71,9 +71,9 @@ module.exports = {
     _.each(placeRankings, (count, placeId) => {
       sortedRecs.push([placeId, count]);
     });
-    sortedRecs.sort((a, b) => {
-      return b[1] - a[1];
-    })
+    sortedRecs.sort((a, b) => (
+      b[1] - a[1]
+    ));
     // return only first 10 sorted recommendations
     if (sortedRecs.length > 10) {
       return sortedRecs.slice(0, 10);
@@ -90,16 +90,16 @@ module.exports = {
   },
   // save recommendations to redis
   saveRecs: (userId, recs) => {
-    client.del(userId , (err, reply) => {
+    client.del(userId, (err, reply) => {
       if (err) {
-        console.log("Error deleting from redis: ", err);
+        console.log('Error deleting from redis: ', err);
       } else {
-        console.log("Successfully deleted from redis, STATUS:", reply);
+        console.log('Successfully deleted from redis, STATUS:', reply);
         client.rpush(userId.toString(), recs, (error, res) => {
           if (error) {
-            console.log("Error saving to redis: ", error);
+            console.log('Error saving to redis: ', error);
           } else {
-            console.log("Successfully saved to redis, STATUS:", reply);
+            console.log('Successfully saved to redis, STATUS:', res);
           }
         });
       }

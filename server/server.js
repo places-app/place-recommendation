@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
 const express = require('express');
 const app = express();
 const db = require('../db/db');
-const client = require('../db/redis');
+require('../db/redis');
 const cron = require('node-cron');
 
 // apply app to use middleware
@@ -18,7 +18,7 @@ require('../config/middleware')(app);
 require('../routes/api-routes')(app);
 
 db.authenticate()
-  .then(err => {
+  .then(() => {
     console.log('Connection has been established successfully.');
   })
   .catch(err => {
@@ -31,12 +31,10 @@ const GetPlaceDetails = require('../workers/GetPlaceDetails');
 
 // get user places daily for recommendations
 cron.schedule('*/15 * * * * *', () => {
-  console.log('get places');
   GetUserPlaces.getRecommendations();
 });
 // get place details hourly
 cron.schedule('*/10 * * * * *', () => {
-  console.log('get user places');
   GetPlaceDetails.getPlaceDetails();
 });
 
