@@ -87,13 +87,15 @@ module.exports = {
           // end of all outer async iterations
           console.log('Done inserting all place types.');
           // save place id to redis
-          client.set("Place_ID", ++rPlaceId, (err, reply) => {
-            if (err) {
-              console.log("Error saving to redis: ", err);
-            } else {
-              console.log("Successfully saved to redis, STATUS:", reply);
-            }
-          });
+          if (rPlaceId) {
+            client.set("Place_ID", ++rPlaceId, (err, reply) => {
+              if (err) {
+                console.log("Error saving to redis: ", err);
+              } else {
+                console.log("Successfully saved to redis, STATUS:", reply);
+              }
+            });
+          }
         }
       });
     })

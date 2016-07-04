@@ -9,6 +9,7 @@ const express = require('express');
 const app = express();
 const db = require('../db/db');
 const client = require('../db/redis');
+const cron = require('node-cron');
 
 // apply app to use middleware
 require('../config/middleware')(app);
@@ -24,13 +25,20 @@ db.authenticate()
     console.log('Unable to connect to the database:', err);
   });
 
-// const PlaceDetails = require('../controllers/PlaceDetailsController');
-// const getUserPlaces = require('../workers/getUserPlaces');
-// const UserPlaces = require('../controllers/UserPlacesController');
-// UserPlaces.getUserPlaces();
-// UserPlaces.getPlaces();
-// const RecommendationsController = require('../controllers/RecommendationsController');
-// RecommendationsController.getRecommendations();
+// cron for workers
+const GetUserPlaces = require('../workers/GetUserPlaces');
+const GetPlaceDetails = require('../workers/GetPlaceDetails');
+
+// get user places daily for recommendations
+cron.schedule('*/15 * * * * *', () => {
+  console.log('get places');
+  GetUserPlaces.getRecommendations();
+});
+// get place details hourly
+cron.schedule('*/10 * * * * *', () => {
+  console.log('get user places');
+  GetPlaceDetails.getPlaceDetails();
+});
 
 app.listen(Number(process.env.PORT), process.env.HOST, () => {
   console.log(`listening *: ${process.env.PORT}`);

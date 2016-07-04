@@ -1,7 +1,7 @@
 const UserPlacesController = require('../controllers/UserPlacesController');
 const Recommendation = require('../engine/recommendations');
 
-const getRecommendations = () => {
+exports.getRecommendations = () => {
   Promise.all([UserPlacesController.getPlaces(), UserPlacesController.getUserPlaces()])
   .then(results => {
     const placeTypes = results[0];
@@ -12,5 +12,3 @@ const getRecommendations = () => {
     console.log('Error getting places or user places types: ', err);
   });
 };
-
-getRecommendations();
