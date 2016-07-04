@@ -30,11 +30,11 @@ const GetUserPlaces = require('../workers/GetUserPlaces');
 const GetPlaceDetails = require('../workers/GetPlaceDetails');
 
 // get user places daily for recommendations
-cron.schedule('*/15 * * * * *', () => {
+cron.schedule(`${process.env.GET_RECS_TIMER}`, () => {
   GetUserPlaces.getRecommendations();
 });
 // get place details hourly
-cron.schedule('*/10 * * * * *', () => {
+cron.schedule(`${process.env.GET_PLACES_TIMER}`, () => {
   GetPlaceDetails.getPlaceDetails();
 });
 
