@@ -1,0 +1,35 @@
+{
+  "name": "places",
+  "version": "1.0.0",
+  "description": "Places",
+  "scripts": {
+    "start": "NODE_ENV=development nodemon server/server.js",
+    "test": "mocha --reporter spec && eslint */*.js"
+  },
+  "author": "Andrew Phavichitr",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.0-rc.6",
+    "axios": "^0.12.0",
+    "body-parser": "^1.15.2",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "node-cron": "^1.1.1",
+    "pg": "^6.0.1",
+    "redis": "^2.6.2",
+    "sequelize": "^3.23.4",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.0",
+    "chai": "^3.5.0",
+    "eslint": "^2.13.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.10.1",
+    "eslint-plugin-jsx-a11y": "^1.5.3",
+    "eslint-plugin-react": "^5.2.2",
+    "mocha": "^2.5.3",
+    "supertest": "^1.2.0"
+  }
+}
