@@ -35,7 +35,7 @@ module.exports = {
                 .then(typeInserted => {
                   typeId = typeInserted[0].id;
                   // insert type into placeTypes table
-                  query = `INSERT INTO "placeTypes" ("placeId", "typeId", "createdAt", "updatedAt") VALUES (${placeId}, ${typeId}, current_timestamp, current_timestamp)`;
+                  query = `INSERT INTO "placeTypes" ("placeId", "typeId", "createdAt", "updatedAt") SELECT ${placeId}, ${typeId}, current_timestamp, current_timestamp WHERE NOT EXISTS (SELECT * FROM "placeTypes" WHERE "placeId" = ${placeId} AND "typeId" = ${typeId})`;
                   Sequelize.query(query)
                   .then(() => {
                     typeCallback();
@@ -51,7 +51,7 @@ module.exports = {
               // if type exists, then insert into placeTypes table
               } else {
                 typeId = typeResults[0].id;
-                query = `INSERT INTO "placeTypes" ("placeId", "typeId", "createdAt", "updatedAt") VALUES (${placeId}, ${typeId}, current_timestamp, current_timestamp)`;
+                query = `INSERT INTO "placeTypes" ("placeId", "typeId", "createdAt", "updatedAt") SELECT ${placeId}, ${typeId}, current_timestamp, current_timestamp WHERE NOT EXISTS (SELECT * FROM "placeTypes" WHERE "placeId" = ${placeId} AND "typeId" = ${typeId})`;
                 Sequelize.query(query)
                 .then(() => {
                   // end of one inner async iteration
