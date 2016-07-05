@@ -1,10 +1,3 @@
-// Load environment variables
-if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config({ path: './env/development.env' });
-} else {
-  require('dotenv').config({ path: './env/production.env' });
-}
-
 const axios = require('axios');
 const serverUrl = 'https://maps.googleapis.com/maps';
 const placeId = '?placeid=';

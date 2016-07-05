@@ -18,7 +18,9 @@ module.exports = {
           Sequelize.query(query)
           .then(userPlaces => {
             const placeTypes = userPlaces[0];
-            userPlaceTypes.push(placeTypes);
+            if (placeTypes.length !== 0) {
+              userPlaceTypes.push(placeTypes);
+            }
             // end of one async iteration
             userCallback();
           })
