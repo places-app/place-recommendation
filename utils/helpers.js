@@ -24,7 +24,6 @@ module.exports = {
     const groups = _.groupBy(userPlaceType, value => (
       `${value.userId}'#'${value.placeId}`
     ));
-    console.log(groups);
     const userPlaces = _.map(groups, group => (
       {
         userId: group[0].userId,
@@ -32,7 +31,6 @@ module.exports = {
         types: _.pluck(group, 'typeId'),
       }
     ));
-    console.log(userPlaces);
     return userPlaces;
   },
   // map user places to user types
