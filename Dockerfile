@@ -3,5 +3,5 @@ RUN mkdir -p /src
 ADD . /src
 WORKDIR /src
 RUN npm install
-EXPOSE 9000
+EXPOSE 8080
 CMD ["npm", "run", "prod"]
