@@ -14,9 +14,26 @@ module.exports = {
       // iterate through each place
       async.eachSeries(places, (place, placeCallback) => {
         const placeId = place.id;
-        const gPlaceId = place.gPlaceId;
+        let gPlaceId = place.gPlaceId;
+        const lat = place.lat;
+        const lng = place.lng;
+        // set redis placeId to placeId from psql
         rPlaceId = placeId;
+        console.log('gPlaceId', gPlaceId);
+        if (!gPlaceId) {
+          // async
+          api.getPlaceId(lat, lng)
+          .then(res => {
+            console.log('new gPlaceId', res.data.results[0].place_id);
+            gPlaceId = res.data.results[0].place_id;
+            query = `UPDATE places SET gPlaceId = ${gPlaceId} WHERE id = ${placeId}`;
+          })
+          .catch(err => {
+            console.log('Error updating places: ', err);
+          });
+        }
         // api call to google places api with google place id
+        console.log('end get g place id');
         api.getPlaceDetails(gPlaceId)
         .then(res => {
           const types = res.data.result.types;
