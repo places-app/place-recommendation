@@ -47,10 +47,9 @@ $ docker-compose up
 ```
 
 ## Redis schema
-- Key       / Value
-- Place_ID  / number (last placeId)
-- User ID   / Recommendations
-- (number)    (array of places)
+- Key / Value
+- Place_ID / number (last placeId)
+- User ID (number) / Recommendations (array of places)
 
 ## Tech
 > node / express server
