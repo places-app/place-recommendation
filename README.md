@@ -10,9 +10,11 @@ The worker that generates recommendations will query from the main postgres data
 
 ## Table of Contents
 1. [Getting started](#getting-started)
-2. [Tech](#tech)
-3. [Team](#team)
-4. [Contributing](#contributing)
+2. [Redis Schema](#redis-schema)
+3. [Tech](#tech)
+4. [Directory Layout](#directory-layout)
+5. [Team](#team)
+6. [Contributing](#contributing)
 
 ## Getting started
 
@@ -45,10 +47,10 @@ $ docker-compose up
 ```
 
 ## Redis schema
-Key       / Value
-Place_ID  / number (last placeId)
-User ID   / Recommendations
-(number)    (array of places)
+- Key       / Value
+- Place_ID  / number (last placeId)
+- User ID   / Recommendations
+- (number)    (array of places)
 
 ## Tech
 > node / express server
