@@ -1,7 +1,8 @@
 const axios = require('axios');
 const serverUrl = 'https://maps.googleapis.com/maps';
 const placeId = '?placeid=';
-const latlng = '?latlng=';
+const input = '?input=';
+const location = '&location=';
 const key = `&key=${process.env.PLACES_KEY}`;
 
 module.exports = {
@@ -13,9 +14,9 @@ module.exports = {
       withCredentials: true,
     });
   },
-  getPlaceId(lat, lng) {
+  getPlaceId(name, lat, lng) {
     return axios({
-      url: `/api/geocode/json${latlng}${lat},${lng}${key}`,
+      url: `/api/place/autocomplete/json${input}${name}${location}${lat},${lng}${key}`,
       method: 'get',
       baseURL: serverUrl,
       withCredentials: true,
